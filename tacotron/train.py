@@ -1,9 +1,9 @@
-import numpy as np 
+import numpy as np
 from datetime import datetime
 import os
 import subprocess
 import time
-import tensorflow as tf 
+import tensorflow as tf
 import traceback
 import argparse
 
@@ -88,7 +88,11 @@ def train(log_dir, args):
 	saver = tf.train.Saver(max_to_keep=5)
 
 	#Memory allocation on the GPU as needed
-	config = tf.ConfigProto()
+	config = tf.ConfigProto(
+		gpu_options=tf.GPUOptions(
+			per_process_gpu_memory_fraction=1.0
+		)
+	)
 	config.gpu_options.allow_growth = True
 
 	#Train
@@ -135,13 +139,13 @@ def train(log_dir, args):
 				if step % args.summary_interval == 0:
 					log('\nWriting summary at step: {}'.format(step))
 					summary_writer.add_summary(sess.run(stats), step)
-				
+
 				if step % args.checkpoint_interval == 0:
 					with open(os.path.join(log_dir,'step_counter.txt'), 'w') as file:
 						file.write(str(step))
 					log('Saving checkpoint to: {}-{}'.format(checkpoint_path, step))
 					saver.save(sess, checkpoint_path, global_step=step)
-					
+
 					log('Saving alignment, Mel-Spectrograms and griffin-lim inverted waveform..')
 					if hparams.predict_linear:
 						input_seq, mel_prediction, linear_prediction, alignment, target = sess.run([

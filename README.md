@@ -91,11 +91,11 @@ Before running the following steps, please make sure you are inside **Tacotron-2
 
 > cd Tacotron-2
 
-Preprocessing can then be started using: 
+Preprocessing can then be started using:
 
 > python preprocess.py
 
-or 
+or
 
 > python3 preprocess.py
 
@@ -116,7 +116,7 @@ Feature prediction model can be **trained** using:
 
 > python train.py --model='Tacotron'
 
-or 
+or
 
 > python3 train.py --model='Tacotron'
 
@@ -126,7 +126,7 @@ Naturally, **training the wavenet** is done by: (Not implemented yet)
 
 > python train.py --model='Wavenet'
 
-or 
+or
 
 > python3 train.py --model='Wavenet'
 
@@ -158,7 +158,7 @@ or
 
 > python synthesize.py --model='Tacotron'
 
-or 
+or
 
 > python3 synthesize.py --model='Tacotron'
 
@@ -166,7 +166,7 @@ Synthesizing the waveforms conditionned on previously synthesized Mel-spectrogra
 
 > python synthesize.py --model='Wavenet'
 
-or 
+or
 
 > python3 synthesize.py --model='Wavenet'
 
@@ -186,3 +186,31 @@ Pre-trained models and audio samples will be added at a later date due to techni
 - [r9y9/wavenet_vocoder](https://github.com/r9y9/wavenet_vocoder)
 
 **Work in progress**
+
+
+# For Japanese dataset
+
+## preprocess
+
+```
+activate text_to_speech_ja
+# cpu environment
+pip install tensorflow==1.6.0
+
+# gpu environment
+pip install tensorflow-gpu==1.6.0
+
+python preprocess.py --dataset jsut-1.1
+```
+
+	Tacotron-2
+	├── datasets
+	├── jsut-1.1
+	│   └── wavs
+
+
+## train
+
+```
+python train.py --model Tacotron
+```
